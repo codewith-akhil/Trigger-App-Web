@@ -45,7 +45,9 @@ export function Header() {
           {/* CTA + mobile toggle */}
           <div className="flex items-center gap-3">
             <a
-              href="#download"
+              href="https://play.google.com/store/apps/details?id=com.trigger.app"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-semibold rounded-lg px-5 py-2.5 text-[15px] shadow-[0_4px_14px_rgba(0,200,83,0.25)] transition-colors"
             >
               <DownloadIcon />
@@ -97,7 +99,9 @@ export function Header() {
                 </a>
               ))}
               <a
-                href="#download"
+                href="https://play.google.com/store/apps/details?id=com.trigger.app"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
                 className="mt-2 inline-flex items-center justify-center gap-2 bg-brand hover:bg-brand-dark text-white font-semibold rounded-lg px-5 py-3 text-[15px] shadow-[0_4px_14px_rgba(0,200,83,0.25)]"
               >

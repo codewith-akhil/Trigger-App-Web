@@ -1,4 +1,7 @@
+"use client";
+
 import * as React from "react";
+import QR from "qrcode";
 import { PhoneFrame, SectionLabel, ScriptTag, Logo, Avatar } from "./primitives";
 
 const FEATURES = [
@@ -77,7 +80,9 @@ export function AppDownloadSection() {
             {/* CTAs */}
             <div className="mt-10 flex flex-wrap items-center gap-5">
               <a
-                href="#download"
+                href="https://play.google.com/store/apps/details?id=com.trigger.app"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 bg-brand-dark hover:bg-[#047857] text-white rounded-2xl px-6 py-3.5 shadow-[0_8px_24px_rgba(5,150,105,0.3)]"
               >
                 <GooglePlayIcon />
@@ -101,7 +106,7 @@ export function AppDownloadSection() {
               {/* QR */}
               <div className="flex items-center gap-3">
                 <div className="w-[88px] h-[88px] bg-white rounded-xl p-2 shadow-[0_4px_14px_rgba(0,0,0,0.06)]">
-                  <QRPattern />
+                  <QRCode url="https://play.google.com/store/apps/details?id=com.trigger.app" />
                 </div>
                 <div>
                   <div className="text-[14px] font-bold text-ink">
@@ -262,31 +267,28 @@ function AppChatListScreen() {
   );
 }
 
-function QRPattern() {
-  // simple stylized QR
-  const cells = Array.from({ length: 49 }, (_, i) => {
-    const row = Math.floor(i / 7);
-    const col = i % 7;
-    // corners
-    const isCorner =
-      (row < 2 && col < 2) ||
-      (row < 2 && col > 4) ||
-      (row > 4 && col < 2);
-    const isCenter = row >= 2 && row <= 4 && col >= 2 && col <= 4;
-    const cornerFill = isCorner;
-    const centerFill =
-      isCenter && ((row + col) % 2 === 0 || (row === 3 && col === 3));
-    return cornerFill || centerFill || (row + col) % 3 === 0;
-  });
+function QRCode({ url }: { url: string }) {
+  const [dataUrl, setDataUrl] = React.useState<string>("");
+  React.useEffect(() => {
+    QR.toDataURL(url, {
+      margin: 0,
+      width: 200,
+      color: { dark: "#0f172a", light: "#ffffff" },
+      errorCorrectionLevel: "M",
+    })
+      .then(setDataUrl)
+      .catch(() => setDataUrl(""));
+  }, [url]);
+  if (!dataUrl) {
+    // skeleton while generating
+    return <div className="w-full h-full bg-[#f1f5f4] animate-pulse rounded" />;
+  }
   return (
-    <div className="grid grid-cols-7 gap-[1px] w-full h-full">
-      {cells.map((on, i) => (
-        <div
-          key={i}
-          className={on ? "bg-ink" : "bg-white"}
-        />
-      ))}
-    </div>
+    <img
+      src={dataUrl}
+      alt="QR code linking to Trigger on Google Play"
+      className="w-full h-full object-contain"
+    />
   );
 }
 

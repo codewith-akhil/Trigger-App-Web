@@ -63,7 +63,9 @@ export function Footer() {
 
             {/* Google Play button */}
             <a
-              href="#download"
+              href="https://play.google.com/store/apps/details?id=com.trigger.app"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-6 inline-flex items-center gap-3 border-2 border-brand rounded-xl px-5 py-2.5 hover:bg-white/5 transition-colors"
             >
               <GooglePlayIcon />
