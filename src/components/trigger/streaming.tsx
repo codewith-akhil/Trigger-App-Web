@@ -1,12 +1,13 @@
 import * as React from "react";
-import { SectionLabel, ScriptTag, Avatar } from "./primitives";
+import { SectionLabel, ScriptTag, Avatar, PhoneImageFrame } from "./primitives";
 
 type Column = {
   badge: string;
   badgeTone: "green" | "red" | "blue";
   title: string;
   desc: string;
-  phone: React.ReactNode;
+  image: string;
+  imageAlt: string;
   features: string[];
   cta: string;
   ctaTone: "green" | "red" | "blue";
@@ -18,7 +19,9 @@ const COLUMNS: Column[] = [
     badgeTone: "green",
     title: "Free Live Stream",
     desc: "Go live instantly and connect with anyone, anytime. Share your moments, interact with your audience and grow your community.",
-    phone: <FreeStreamPhone />,
+    image: "/images/streaming/free-stream.png",
+    imageAlt:
+      "Smartphone showing a free live stream interface with LIVE badge, viewer count, and chat overlay",
     features: [
       "No payment required",
       "Unlimited live streaming",
@@ -34,7 +37,9 @@ const COLUMNS: Column[] = [
     badgeTone: "red",
     title: "Paid Live Stream",
     desc: "Monetize your content with exclusive live streams. Set your own price and give your audience a premium experience.",
-    phone: <PaidStreamPhone />,
+    image: "/images/streaming/paid-stream.png",
+    imageAlt:
+      "Smartphone showing a paid live stream interface with PAID badge, lock icon, price card, and Pay & Join button",
     features: [
       "Set your own price",
       "Earn from your content",
@@ -51,7 +56,9 @@ const COLUMNS: Column[] = [
     badgeTone: "blue",
     title: "Schedule Live Stream",
     desc: "Plan your live streams in advance and let your audience know. Build excitement, get notifications and reach more viewers.",
-    phone: <SchedulePhone />,
+    image: "/images/streaming/schedule-stream.png",
+    imageAlt:
+      "Smartphone showing a schedule live stream form with title, date, time fields, and Schedule Stream button",
     features: [
       "Schedule date & time",
       "Notify your followers",
@@ -157,8 +164,14 @@ function StreamColumn({ col }: { col: Column }) {
         {col.desc}
       </p>
 
-      {/* Phone mockup */}
-      <div className="mt-6 flex justify-center">{col.phone}</div>
+      {/* Phone image */}
+      <div className="mt-6 flex justify-center">
+        <PhoneImageFrame
+          src={col.image}
+          alt={col.imageAlt}
+          width={180}
+        />
+      </div>
 
       {/* Feature list */}
       <ul className="mt-6 space-y-2.5">
@@ -255,165 +268,6 @@ function CreatorsBlock() {
           </div>
         ))}
       </div>
-    </div>
-  );
-}
-
-/* ----- Streaming phone mockups ----- */
-function StreamPhone({
-  children,
-  width = 180,
-}: {
-  children: React.ReactNode;
-  width?: number;
-}) {
-  return (
-    <div
-      className="relative shrink-0"
-      style={{
-        width,
-        borderRadius: 28,
-        background: "#0b0f17",
-        padding: 8,
-        boxShadow: "0 16px 32px -10px rgba(0,0,0,0.25)",
-      }}
-    >
-      <div
-        className="relative overflow-hidden bg-black"
-        style={{
-          borderRadius: 20,
-          height: width * 1.95,
-        }}
-      >
-        <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-3 pt-1 text-[8px] font-semibold text-white/80">
-          <span>12:30</span>
-          <span>•••</span>
-        </div>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function FreeStreamPhone() {
-  return (
-    <StreamPhone width={170}>
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0b3d2e] via-[#0b3d2e] to-black">
-        <div
-          className="absolute left-1/2 top-[34%] -translate-x-1/2 w-20 h-20 rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle at 50% 40%, #f1c8a8, #d99a73 60%, #7a4b32)",
-          }}
-        />
-        <div className="absolute top-7 left-2 flex items-center gap-0.5 bg-danger text-white text-[8px] font-bold px-1.5 py-0.5 rounded">
-          <span className="w-1 h-1 rounded-full bg-white animate-pulse" /> LIVE
-        </div>
-        <div className="absolute top-7 right-2 bg-black/40 text-white text-[8px] font-semibold px-1.5 py-0.5 rounded">
-          1.2K
-        </div>
-        <div className="absolute left-2 bottom-12 flex flex-col gap-1">
-          {[
-            { n: "Arjun", t: "🔥🔥" },
-            { n: "Neha", t: "Hi!" },
-            { n: "Rohan", t: "Send gift" },
-            { n: "Priya", t: "❤️" },
-          ].map((m, i) => (
-            <div
-              key={i}
-              className="inline-flex items-center gap-1 bg-black/35 rounded-full pl-0.5 pr-2 py-0.5 w-fit"
-            >
-              <Avatar name={m.n} size={12} />
-              <span className="text-white text-[7px]">
-                <span className="font-semibold">{m.n}</span> {m.t}
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className="absolute right-2 bottom-12 flex flex-col gap-2">
-          <div className="w-5 h-5 rounded-full bg-white/15" />
-          <div className="w-5 h-5 rounded-full bg-white/15" />
-        </div>
-      </div>
-    </StreamPhone>
-  );
-}
-
-function PaidStreamPhone() {
-  return (
-    <StreamPhone width={170}>
-      <div className="absolute inset-0 bg-gradient-to-b from-[#3d0b0b] via-[#3d0b0b] to-black">
-        <div
-          className="absolute left-1/2 top-[28%] -translate-x-1/2 w-20 h-20 rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle at 50% 40%, #f1c8a8, #d99a73 60%, #7a4b32)",
-          }}
-        />
-        <div className="absolute top-7 left-2 flex items-center gap-1 bg-[#ef4444] text-white text-[8px] font-bold px-1.5 py-0.5 rounded">
-          <LockMini /> PAID
-        </div>
-        <div className="absolute top-7 right-2 bg-black/40 text-white text-[8px] font-semibold px-1.5 py-0.5 rounded">
-          892
-        </div>
-        {/* price card */}
-        <div className="absolute left-2 right-2 bottom-12 bg-white/95 rounded-lg p-2">
-          <div className="text-[8px] text-ink font-semibold">
-            Unlock this live stream
-          </div>
-          <div className="text-[14px] font-bold text-ink mt-0.5">₹100</div>
-          <div className="mt-1 bg-brand text-white text-[8px] font-bold rounded py-1 text-center">
-            Pay & Join
-          </div>
-          <div className="text-[6px] text-muted-text text-center mt-1">
-            Secure payment powered by Razorpay
-          </div>
-        </div>
-      </div>
-    </StreamPhone>
-  );
-}
-
-function SchedulePhone() {
-  return (
-    <StreamPhone width={170}>
-      <div className="absolute inset-0 bg-white pt-6">
-        <div className="px-2 flex items-center gap-1">
-          <span className="text-ink text-[10px]">‹</span>
-          <span className="text-[9px] font-bold text-ink">Schedule Live</span>
-        </div>
-        {/* cover */}
-        <div className="mt-1.5 mx-2 h-10 rounded bg-gradient-to-br from-brand-light to-brand-darker flex items-center justify-center text-white text-[7px] font-semibold">
-          Change Cover
-        </div>
-        {/* fields */}
-        <div className="mt-1.5 mx-2 space-y-1.5">
-          <Field label="Title" value="Let's Talk ❤️" />
-          <Field label="Description" value="Q&A session" />
-          <div className="flex items-center justify-between bg-[#f8fafc] rounded px-1.5 py-1">
-            <span className="text-[7px] text-muted-text">Stream Type</span>
-            <span className="text-[7px] font-semibold text-brand-dark">
-              Paid · ₹100
-            </span>
-          </div>
-          <div className="grid grid-cols-2 gap-1">
-            <Field label="Date" value="5 Sep 2026" />
-            <Field label="Time" value="08:00 PM" />
-          </div>
-          <div className="mt-1 bg-brand text-white text-[8px] font-bold rounded py-1.5 text-center">
-            Schedule Stream
-          </div>
-        </div>
-      </div>
-    </StreamPhone>
-  );
-}
-
-function Field({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="bg-[#f8fafc] rounded px-1.5 py-1">
-      <div className="text-[6px] text-muted-text">{label}</div>
-      <div className="text-[8px] font-medium text-ink">{value}</div>
     </div>
   );
 }

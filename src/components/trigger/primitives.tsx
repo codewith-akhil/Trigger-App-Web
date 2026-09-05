@@ -184,6 +184,63 @@ export function PhoneFrame({
   );
 }
 
+/**
+ * PhoneImageFrame — a phone shell that wraps a portrait image instead of
+ * CSS-drawn children. The image fills the entire screen area (no status bar
+ * overlay, since the image itself includes the full screen UI).
+ *
+ * Used by the Hero and Streaming sections where we render real generated
+ * phone-screen images instead of hand-coded UI mockups.
+ */
+export function PhoneImageFrame({
+  src,
+  alt,
+  width = 280,
+  className = "",
+  style,
+}: {
+  src: string;
+  alt: string;
+  width?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div
+      className={`relative shrink-0 ${className}`}
+      style={{
+        width,
+        borderRadius: 40,
+        background: "#0b0f17",
+        padding: 10,
+        boxShadow:
+          "0 25px 50px -12px rgba(0,0,0,0.28), 0 8px 18px -6px rgba(0,0,0,0.18)",
+        ...style,
+      }}
+    >
+      {/* notch */}
+      <div
+        className="absolute left-1/2 -translate-x-1/2 top-[14px] z-20 rounded-full bg-black"
+        style={{ width: 96, height: 22 }}
+      />
+      <div
+        className="relative overflow-hidden bg-black"
+        style={{
+          borderRadius: 32,
+          height: (width - 20) * 2.05,
+        }}
+      >
+        <img
+          src={src}
+          alt={alt}
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  );
+}
+
 /* Tiny status bar icons */
 function SignalIcon() {
   return (
