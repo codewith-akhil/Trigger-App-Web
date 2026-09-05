@@ -5,7 +5,8 @@ type Card = {
   title: string;
   desc: string;
   tags: string[];
-  thumb: React.ReactNode;
+  image: string;
+  imageAlt: string;
 };
 
 const CARDS: Card[] = [
@@ -13,37 +14,49 @@ const CARDS: Card[] = [
     title: "Secure Photo & Video Sharing",
     desc: "Share photos and videos with OneShort-style secure viewing. Media is protected and cannot be easily saved or screenshotted.",
     tags: ["Secure View", "Screenshot Prevention", "Auto Expire"],
-    thumb: <SecureMediaThumb />,
+    image: "/images/chat-features/secure-media.png",
+    imageAlt:
+      "Smartphone gallery protected by a green shield indicating secure photo and video viewing",
   },
   {
     title: "Screenshot Prevention",
     desc: "Advanced protection to prevent screenshots and screen recording, keeping your conversations and media safe.",
     tags: ["Block Screenshots", "Block Screen Recording", "Your Privacy Matters"],
-    thumb: <ScreenshotBlockThumb />,
+    image: "/images/chat-features/screenshot-block.png",
+    imageAlt:
+      "Smartphone with a red prohibition icon over a screenshot button indicating screenshot blocking",
   },
   {
     title: "Clear Messages Both Ends",
     desc: "Delete messages for everyone anytime. Keep your conversations in your control with full privacy.",
     tags: ["Delete for Everyone", "No Traces", "Chat with Confidence"],
-    thumb: <ClearMsgThumb />,
+    image: "/images/chat-features/clear-messages.png",
+    imageAlt:
+      "Chat message bubble with a trash icon showing delete for everyone functionality",
   },
   {
     title: "Audio & Video Calls",
     desc: "Enjoy high-quality 1-on-1 audio and video calls with crystal-clear sound and smooth performance.",
     tags: ["HD Quality", "Low Latency", "Private & Secure"],
-    thumb: <CallThumb />,
+    image: "/images/chat-features/calls.png",
+    imageAlt:
+      "Smartphone showing a video call interface with two avatars and green call controls",
   },
   {
     title: "Voice Messages",
     desc: "Express more with voice messages. Share your thoughts instantly, anytime.",
     tags: ["High Quality Audio", "Fast & Reliable", "Real Conversations"],
-    thumb: <VoiceMsgThumb />,
+    image: "/images/chat-features/voice-messages.png",
+    imageAlt:
+      "Voice message player UI with a green play button and audio waveform visualization",
   },
   {
     title: "Location Sharing",
     desc: "Share your live location or current location with trusted contacts when needed.",
     tags: ["Live Location", "Current Location", "Share with Control"],
-    thumb: <LocationThumb />,
+    image: "/images/chat-features/location-sharing.png",
+    imageAlt:
+      "Smartphone map interface with a green location pin marker showing live location sharing",
   },
 ];
 
@@ -187,7 +200,17 @@ export function ChatSection() {
 function Card({ card }: { card: Card }) {
   return (
     <article className="bg-white rounded-2xl p-6 border border-[#eef2f0] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)]">
-      <div className="rounded-xl overflow-hidden mb-4">{card.thumb}</div>
+      {/* Square feature image — unique per card, content-related */}
+      <div className="mb-5 flex justify-center">
+        <div className="relative w-full aspect-square max-w-[220px] rounded-xl overflow-hidden bg-brand-mint-bg border border-[#eef2f0]">
+          <img
+            src={card.image}
+            alt={card.imageAlt}
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
       <h3 className="text-[19px] font-bold text-ink leading-snug">
         {card.title}
       </h3>
@@ -428,116 +451,6 @@ function LocationCard({ time }: { time: string }) {
           </div>
         </div>
         <div className="text-[8px] text-faint mt-0.5 text-right">{time} ✓✓</div>
-      </div>
-    </div>
-  );
-}
-
-/* ---- card thumbnails ---- */
-function SecureMediaThumb() {
-  return (
-    <div className="h-32 bg-[#1f2937] relative flex items-center justify-center">
-      <div
-        className="absolute inset-4 rounded-lg"
-        style={{
-          background:
-            "radial-gradient(circle at 40% 40%, #f1c8a8, #d99a73 60%, #7a4b32)",
-        }}
-      />
-      <div className="absolute inset-0 backdrop-blur-md flex items-center justify-center text-white">
-        <EyeOffIcon big />
-      </div>
-    </div>
-  );
-}
-function ScreenshotBlockThumb() {
-  return (
-    <div className="h-32 bg-[#1f2937] flex flex-col items-center justify-center text-white gap-2">
-      <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
-        <LockIcon big />
-      </div>
-      <div className="text-[11px] font-semibold">Screen Cannot Be Screenshotted</div>
-    </div>
-  );
-}
-function ClearMsgThumb() {
-  return (
-    <div className="h-32 bg-[#f8fafc] p-3 flex flex-col justify-end gap-1.5">
-      <div className="self-end bg-brand-dark text-white text-[10px] px-2 py-1 rounded-lg rounded-br-sm max-w-[60%]">
-        Yes! 😊
-      </div>
-      <div className="self-end text-[7px] text-faint">12:41 PM ✓✓</div>
-      <div className="self-start bg-white border border-[#eef2f0] text-ink text-[9px] px-2 py-1 rounded-lg">
-        ↩ Reveal · Delete for everyone
-      </div>
-    </div>
-  );
-}
-function CallThumb() {
-  return (
-    <div className="h-32 bg-gradient-to-b from-[#1f2937] to-black relative flex items-center justify-center">
-      <div
-        className="w-14 h-14 rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle at 40% 40%, #f1c8a8, #d99a73 60%, #7a4b32)",
-        }}
-      />
-      <div className="absolute top-2 left-0 right-0 text-center">
-        <div className="text-white text-[10px] font-semibold">Ananya</div>
-        <div className="text-white/70 text-[8px]">00:34</div>
-      </div>
-      <div className="absolute bottom-2 left-0 right-0 flex items-center justify-center gap-2">
-        <div className="w-6 h-6 rounded-full bg-white/15" />
-        <div className="w-6 h-6 rounded-full bg-white/15" />
-        <div className="w-6 h-6 rounded-full bg-danger" />
-      </div>
-    </div>
-  );
-}
-function VoiceMsgThumb() {
-  return (
-    <div className="h-32 bg-[#f8fafc] p-3 flex items-center justify-center">
-      <div className="bg-brand-dark text-white px-3 py-2 rounded-2xl flex items-center gap-2 w-[80%]">
-        <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="white">
-            <path d="M6 4l14 8-14 8V4z" />
-          </svg>
-        </div>
-        <div className="flex items-center gap-0.5 flex-1">
-          {[6, 12, 8, 14, 7, 10, 16, 8, 12, 6, 9, 14, 7, 10].map((h, i) => (
-            <span
-              key={i}
-              className="block w-0.5 bg-white/80 rounded"
-              style={{ height: h }}
-            />
-          ))}
-        </div>
-        <span className="text-[10px]">0:26</span>
-      </div>
-    </div>
-  );
-}
-function LocationThumb() {
-  return (
-    <div
-      className="h-32 relative"
-      style={{
-        background: "linear-gradient(135deg, #d1fae5, #a7f3d0 50%, #6ee7b7)",
-      }}
-    >
-      <svg
-        viewBox="0 0 200 100"
-        className="absolute inset-0 w-full h-full text-[#059669]/30"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      >
-        <path d="M0 60h50l10-15h40l10 15h50l10-20h30" />
-        <path d="M0 80h60l10-15h30l10 15h60l10-15h20" />
-      </svg>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="w-5 h-5 rounded-full bg-danger ring-2 ring-white shadow-lg" />
       </div>
     </div>
   );
