@@ -30,12 +30,18 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files (never commit secrets)
 .env*
+!.env.example
 
 # vercel
 .vercel
 
+# amplify
+.amplify/
+amplify/.config/
+amplify/backend/
+amplify/#current-cloud-backend/
 
 # typescript
 *.tsbuildinfo
@@ -46,9 +52,24 @@ local-*
 *.log
 dev.log
 dev.out.log
+server.log
 test
 prompt
 
-server.log
-# Skills directory
+# Skills directory (sandbox only)
 /skills/
+
+# Sandbox-only artifacts (not part of the production app)
+/.zscripts/
+/examples/
+/mini-services/
+/tests/
+/download/
+/db/
+/design_analysis_*.json
+Caddyfile
+
+# Local-only working files (drafts, screenshots, etc.)
+/upload/
+/preview-*.png
+/preview-*.jpg

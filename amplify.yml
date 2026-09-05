@@ -1,0 +1,23 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # Use npm for predictable Amplify builds (lockfile will be generated on first install).
+        - npm install --legacy-peer-deps
+    build:
+      commands:
+        # Run a plain `next build` — AWS Amplify Hosting natively detects
+        # Next.js (App Router / SSR) and wires up the @aws-amplify/nextjs adapter.
+        # We intentionally do NOT use the package.json `build` script here because
+        # it adds bun-specific standalone copy steps that Amplify does not need.
+        - npx next build
+  artifacts:
+    # Amplify will pick up the .next directory and host it as a Next.js SSR app.
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - .next/cache/**/*
