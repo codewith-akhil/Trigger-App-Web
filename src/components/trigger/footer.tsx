@@ -5,8 +5,8 @@ const COLUMNS = [
   {
     heading: "Who we are",
     links: [
-      { label: "About us", href: "#about" },
-      { label: "Careers", href: "#careers" },
+      { label: "About us", href: "/?page=about" },
+      { label: "Careers", href: "/?page=careers" },
       { label: "Upcoming Features", href: "#upcoming" },
     ],
   },
@@ -15,15 +15,15 @@ const COLUMNS = [
     links: [
       { label: "Terms and Conditions", href: "/?page=terms-conditions" },
       { label: "Privacy Policy", href: "/?page=privacy-policy" },
-      { label: "Pricing Policy", href: "#pricing-policy" },
+      { label: "Pricing Policy", href: "/?page=pricing-policy" },
     ],
   },
   {
     heading: "Need Help ?",
     links: [
-      { label: "Contact us", href: "#contact" },
-      { label: "Report", href: "#report" },
-      { label: "Help Center", href: "#help" },
+      { label: "Contact us", href: "/?page=contact" },
+      { label: "Report", href: "/?page=report" },
+      { label: "Help Center", href: "/?page=help-center" },
     ],
   },
 ];

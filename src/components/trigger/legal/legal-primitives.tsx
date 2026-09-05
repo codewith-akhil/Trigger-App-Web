@@ -153,14 +153,23 @@ export function LegalSectionBlock({ section }: { section: PolicySection }) {
       </div>
       <div className="space-y-4">
         {section.blocks.map((block, i) => (
-          <LegalBlockRenderer key={i} block={block} />
+          <LegalBlockRenderer key={i} block={block as LegalBlock} />
         ))}
       </div>
     </article>
   );
 }
 
-export function LegalBlockRenderer({ block }: { block: PolicyBlock }) {
+// Extended block type — supports an optional "table" block for fee tables.
+export type LegalBlock =
+  | PolicyBlock
+  | {
+      type: "table";
+      caption?: string;
+      rows: { label: string; amount: string; strong?: boolean }[];
+    };
+
+export function LegalBlockRenderer({ block }: { block: LegalBlock }) {
   switch (block.type) {
     case "p":
       return (
@@ -195,6 +204,45 @@ export function LegalBlockRenderer({ block }: { block: PolicyBlock }) {
           <span className="text-[15px] text-ink font-medium break-all">
             {block.value}
           </span>
+        </div>
+      );
+    case "table":
+      return (
+        <div className="border border-brand-mint rounded-xl overflow-hidden">
+          {block.caption && (
+            <div className="bg-brand-mint-bg px-4 py-2 border-b border-brand-mint">
+              <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-brand-dark">
+                {block.caption}
+              </span>
+            </div>
+          )}
+          <div className="divide-y divide-[#eef2f0]">
+            {block.rows.map((row, i) => (
+              <div
+                key={i}
+                className={`flex items-center justify-between gap-4 px-4 py-2.5 ${
+                  row.strong
+                    ? "bg-brand-mint-bg/60"
+                    : "hover:bg-[#fafafa] transition-colors"
+                }`}
+              >
+                <span
+                  className={`text-[14.5px] text-left ${
+                    row.strong ? "font-bold text-ink" : "text-body"
+                  }`}
+                >
+                  {row.label}
+                </span>
+                <span
+                  className={`text-[14.5px] tabular-nums ${
+                    row.strong ? "font-bold text-brand-dark" : "font-medium text-ink"
+                  }`}
+                >
+                  {row.amount}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       );
     default:

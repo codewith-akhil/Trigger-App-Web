@@ -73,3 +73,6 @@ Caddyfile
 /upload/
 /preview-*.png
 /preview-*.jpg
+
+# Local form submissions (contact + report API writes here)
+/data/
