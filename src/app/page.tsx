@@ -9,6 +9,7 @@ import { SecuritySection } from "@/components/trigger/security";
 import { AppDownloadSection } from "@/components/trigger/app-download";
 import { Footer } from "@/components/trigger/footer";
 import { PrivacyPolicyPage } from "@/components/trigger/legal/privacy-policy-page";
+import { TermsAndConditionsPage } from "@/components/trigger/legal/terms-conditions-page";
 
 export default async function Home({
   searchParams,
@@ -29,6 +30,20 @@ export default async function Home({
         }
       >
         <PrivacyPolicyPage />
+      </Suspense>
+    );
+  }
+
+  if (page === "terms-conditions") {
+    return (
+      <Suspense
+        fallback={
+          <div className="min-h-screen flex items-center justify-center text-muted-text">
+            Loading…
+          </div>
+        }
+      >
+        <TermsAndConditionsPage />
       </Suspense>
     );
   }
